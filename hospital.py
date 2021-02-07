@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from Web.forms import RegistrationForm, LoginForm, addPatientForm
+from Web.connect import insertPatient
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'da73c0b0468da6b34c3ed3042c833b22a9981a2e80549059a0b2dc243ad0fc7db03d433988729d0148964816254b8823f29589f03332'
@@ -52,6 +53,22 @@ def login():
 def addPatient():
     form = addPatientForm()
     if form.validate_on_submit():
+        patientDict = {
+            'idPatient': form.idPatient.data,
+            'name': form.name.data,
+            'surname': form.surname.data,
+            'gender': form.gender.data,
+            'postalCode': form.postalCode.data,
+            'city': form.city.data,
+            'street': form.street.data,
+            'houseNumber': form.houseNumber.data,
+            'apartmentNumber': form.apartmentNumber.data,
+            'tel': form.tel.data,
+            'email': form.email.data,
+            'additionalDescription': form.additionalDescription.data,
+            'isAlive': form.isAlive.data
+        }
+        insertPatient(patientDict, 'postgres')
         flash('Added Patient!', 'success')
         return redirect(url_for('addPatient'))
     return render_template('addPatient.html', title='Add Patient', form=form)

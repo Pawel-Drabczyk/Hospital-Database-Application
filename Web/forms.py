@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Selec
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 class addPatientForm(FlaskForm):
-    id_patient = StringField('PESEL number', validators=[DataRequired()])
+    idPatient = StringField('PESEL number', validators=[DataRequired()])
     name = StringField('Name')
     surname = StringField('Surname')
     gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
@@ -13,6 +13,8 @@ class addPatientForm(FlaskForm):
     houseNumber = StringField('House Number')
     apartmentNumber = StringField('Apartment Number')
     tel = StringField('Telephone Number')
+    email = StringField('Email', validators=[Email()])
+    additionalDescription = StringField('Additional Description')
     isAlive = BooleanField('Alive')
     submit = SubmitField('Add Patient')
 
