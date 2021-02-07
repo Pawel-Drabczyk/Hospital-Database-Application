@@ -13,7 +13,7 @@ class addPatientForm(FlaskForm):
     houseNumber = StringField('House Number')
     apartmentNumber = StringField('Apartment Number')
     tel = StringField('Telephone Number')
-    email = StringField('Email', validators=[Email()])
+    email = StringField('Email')
     additionalDescription = StringField('Additional Description')
     isAlive = BooleanField('Alive')
     submit = SubmitField('Add Patient')

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from Web.forms import RegistrationForm, LoginForm, addPatientForm
 from Web.connect import insertPatient
+import psycopg2.errors
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'da73c0b0468da6b34c3ed3042c833b22a9981a2e80549059a0b2dc243ad0fc7db03d433988729d0148964816254b8823f29589f03332'
@@ -68,8 +70,11 @@ def addPatient():
             'additionalDescription': form.additionalDescription.data,
             'isAlive': form.isAlive.data
         }
-        insertPatient(patientDict, 'postgres')
-        flash('Added Patient!', 'success')
+        exception = insertPatient(patientDict, 'postgres')
+        if exception == psycopg2.errors.IntegrityError:
+            flash('Patient already exists!', 'danger')
+        else:
+            flash('Added Patient!', 'success')
         return redirect(url_for('addPatient'))
     return render_template('addPatient.html', title='Add Patient', form=form)
 
