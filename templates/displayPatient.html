@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+    {% for patientDict in patientDictList %}
+        <h1>Patient 1</h1>
+        <p>Pesel number - {{ patientDict['idPatient'] }}</p>
+        <p>Name - {{ patientDict['name'] }}</p>
+        <p>Surname - {{ patientDict['surname'] }}</p>
+        <p>Gender - {{ patientDict['gender'] }}</p>
+        <p>Postal Code - {{ patientDict['postalCode'] }}</p>
+        <p>City - {{ patientDict['city'] }}</p>
+        <p>Street - {{ patientDict['street'] }}</p>
+        <p>House Number - {{ patientDict['houseNumber'] }}</p>
+        <p>Apartment Number - {{ patientDict['apartmentNumber'] }}</p>
+        <p>Telephone Number - {{ patientDict['tel'] }}</p>
+        <p>Email - {{ patientDict['email'] }}</p>
+        <p>Additional Description - {{ patientDict['additionalDescription'] }}</p>
+        <p>Is patient alive? - {{ patientDict['isAlive'] }}</p>
+    {% endfor %}
+    </div>
+{% endblock content %}

@@ -1,7 +1,8 @@
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request, session
 from Web.forms import RegistrationForm, LoginForm, addPatientForm, searchPatientForm
 from Web.connect import insertPatient, selectPatient
 import psycopg2.errors
+import json
 
 
 app = Flask(__name__)
@@ -101,13 +102,42 @@ def searchPatient():
         elif form.isAlive.data == 'D':
             patientDict['isAlive'] = False
 
-        patientResultList = selectPatient(patientDict, 'postgres')
+        patientTupleList = selectPatient(patientDict, 'postgres')
+        #converting list of tuples to list of dictionaries
+        patientDictList = []
+        for tuple in patientTupleList:
+            temp = {
+                'idPatient': tuple[0],
+                'name': tuple[1],
+                'surname': tuple[2],
+                'gender': tuple[3],
+                'postalCode': tuple[4],
+                'city': tuple[5],
+                'street': tuple[6],
+                'houseNumber': tuple[7],
+                'apartmentNumber': tuple[8],
+                'tel': tuple[9],
+                'email': tuple[10],
+                'additionalDescription': tuple[11],
+                'isAlive': tuple[12]
+            }
+            patientDictList.append(temp)
 
-        return redirect(url_for('displayPatient'))
+        session['patientDictList']= patientDictList
+        return redirect(url_for('displayPatient', patientDictList=patientDictList))
     return render_template('searchPatient.html', title='Search For Patient', form=form)
 
 @app.route('/displayPatient', methods=['Get', 'POST'])
 def displayPatient():
+    patientDictList = session.get('patientDictList', None)
+    #patientDictListString = request.args.get('patientDictList', None)
+    #print(patientDictListString)
+    #patientDictList = json.loads(patientDictListString)
+    print(type(patientDictList))
+    print(type(patientDictList[0]))
+
+
+    return render_template('displayPatient.html', title='Display Patient', patientDictList=patientDictList)
 
 
 if __name__ == '__main__':
