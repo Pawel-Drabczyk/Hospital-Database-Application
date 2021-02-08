@@ -50,8 +50,8 @@ def insertPatient(patientDict, user):
         cur = conn.cursor()
         cur.execute(sql, (patientDict['idPatient'], patientDict['name'], patientDict['surname'], patientDict['gender'],
                           patientDict['postalCode'], patientDict['city'], patientDict['street'], patientDict['houseNumber'],
-                          patientDict['apartmentNumber'], patientDict['email'], patientDict['additionalDescription'],
-                          patientDict['tel'], patientDict['isAlive'] ) )
+                          patientDict['apartmentNumber'], patientDict['tel'], patientDict['email'],
+                          patientDict['additionalDescription'], patientDict['isAlive'] ) )
         conn.commit()
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
@@ -61,17 +61,60 @@ def insertPatient(patientDict, user):
         if conn is not None:
             conn.close()
 
+def selectPatient(patientDict, user):
+    sql = "SELECT * FROM hdbapp.patient " \
+          "     WHERE " \
+          "         (idPatient=%s OR %s IS NULL) " \
+          "         AND (name=%s OR %s IS NULL) " \
+          "         AND (surname=%s OR %s IS NULL) " \
+          "         AND (gender=%s OR %s IS NULL OR %s='B') " \
+          "         AND (postalCode=%s OR %s IS NULL) " \
+          "         AND (city=%s OR %s IS NULL) " \
+          "         AND (street=%s OR %s IS NULL) " \
+          "         AND (houseNumber=%s OR %s IS NULL) " \
+          "         AND (apartmentNumber=%s OR %s IS NULL) " \
+          "         AND (tel=%s OR %s IS NULL) " \
+          "         AND (email=%s OR %s IS NULL) " \
+          "         AND (isAlive=%s OR %s IS NULL);"
 
+    conn = None
+    try:
+        params = config(os.path.join('..', 'Users', f'{user}.ini'), 'postgresql')
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql, (patientDict['idPatient'], patientDict['idPatient'], patientDict['name'], patientDict['name'],
+                          patientDict['surname'], patientDict['surname'], patientDict['gender'], patientDict['gender'],
+                          patientDict['gender'], patientDict['postalCode'], patientDict['postalCode'], patientDict['city'],
+                          patientDict['city'], patientDict['street'], patientDict['street'], patientDict['houseNumber'],
+                          patientDict['houseNumber'], patientDict['apartmentNumber'], patientDict['apartmentNumber'],
+                          patientDict['tel'], patientDict['tel'], patientDict['email'], patientDict['email'],
+                          patientDict['isAlive'], patientDict['isAlive']))
+        results = cur.fetchall()
+        cur.close()
+        return results
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+#
 # patient = {
-#     'idPatient': '90102399999',
+#     'idPatient': '11111111111',
 #     'name': None,
 #     'surname': None,
-#     'gender': None,
+#     'gender': 'B',
 #     'postalCode': None,
 #     'city': None,
 #     'street': None,
 #     'houseNumber': None,
 #     'apartmentNumber': None,
 #     'tel': None,
-#     'isAlive': True
+#     'email': None,
+#     'isAlive': None
 # }
+#
+# patientResultList = selectPatient(patient, 'postgres')
+# for patientTuple in patientResultList:
+#     for i in patientTuple:
+#         print(i)

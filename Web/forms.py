@@ -18,6 +18,21 @@ class addPatientForm(FlaskForm):
     isAlive = BooleanField('Alive')
     submit = SubmitField('Add Patient')
 
+class searchPatientForm(FlaskForm):
+    idPatient = StringField('PESEL number')
+    name = StringField('Name')
+    surname = StringField('Surname')
+    gender = SelectField('Gender', choices=[('B', 'Both'), ('M', 'Male'), ('F', 'Female')])
+    postalCode = StringField('Postal Code')
+    city = StringField('City')
+    street = StringField('Street')
+    houseNumber = StringField('House Number')
+    apartmentNumber = StringField('Apartment Number')
+    tel = StringField('Telephone Number')
+    email = StringField('Email')
+    isAlive = SelectField('Alive', choices=[('A', 'Alive'), ('D', 'Dead'), ('B', 'Both')])
+    submit = SubmitField('Search for Patient')
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect
-from Web.forms import RegistrationForm, LoginForm, addPatientForm
-from Web.connect import insertPatient
+from Web.forms import RegistrationForm, LoginForm, addPatientForm, searchPatientForm
+from Web.connect import insertPatient, selectPatient
 import psycopg2.errors
 
 
@@ -77,6 +77,38 @@ def addPatient():
             flash('Added Patient!', 'success')
         return redirect(url_for('addPatient'))
     return render_template('addPatient.html', title='Add Patient', form=form)
+
+@app.route('/searchPatient', methods=['Get', 'POST'])
+def searchPatient():
+    form = searchPatientForm()
+    if form.validate_on_submit():
+        patientDict = {
+            'idPatient': form.idPatient.data,
+            'name': form.name.data,
+            'surname': form.surname.data,
+            'gender': form.gender.data,
+            'postalCode': form.postalCode.data,
+            'city': form.city.data,
+            'street': form.street.data,
+            'houseNumber': form.houseNumber.data,
+            'apartmentNumber': form.apartmentNumber.data,
+            'tel': form.tel.data,
+            'email': form.email.data,
+            'isAlive': None
+        }
+        if form.isAlive.data == 'A':
+            patientDict['isAlive'] = True
+        elif form.isAlive.data == 'D':
+            patientDict['isAlive'] = False
+
+        patientResultList = selectPatient(patientDict, 'postgres')
+
+        return redirect(url_for('displayPatient'))
+    return render_template('searchPatient.html', title='Search For Patient', form=form)
+
+@app.route('/displayPatient', methods=['Get', 'POST'])
+def displayPatient():
+
 
 if __name__ == '__main__':
     app.run(debug=True)
