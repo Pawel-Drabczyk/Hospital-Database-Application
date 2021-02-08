@@ -101,8 +101,20 @@ def searchPatient():
             patientDict['isAlive'] = True
         elif form.isAlive.data == 'D':
             patientDict['isAlive'] = False
+        if patientDict['idPatient'] == '': patientDict['idPatient'] = None
+        if patientDict['name'] == '': patientDict['name'] = None
+        if patientDict['surname'] == '': patientDict['surname'] = None
+        if patientDict['postalCode'] == '': patientDict['postalCode'] = None
+        if patientDict['city'] == '': patientDict['city'] = None
+        if patientDict['street'] == '': patientDict['street'] = None
+        if patientDict['houseNumber'] == '': patientDict['houseNumber'] = None
+        if patientDict['apartmentNumber'] == '': patientDict['apartmentNumber'] = None
+        if patientDict['tel'] == '': patientDict['tel'] = None
+        if patientDict['email'] == '': patientDict['email'] = None
 
+        print(patientDict)
         patientTupleList = selectPatient(patientDict, 'postgres')
+        print(patientTupleList)
         #converting list of tuples to list of dictionaries
         patientDictList = []
         for tuple in patientTupleList:
@@ -121,21 +133,16 @@ def searchPatient():
                 'additionalDescription': tuple[11],
                 'isAlive': tuple[12]
             }
+
             patientDictList.append(temp)
 
-        session['patientDictList']= patientDictList
+        session['patientDictList'] = patientDictList
         return redirect(url_for('displayPatient', patientDictList=patientDictList))
     return render_template('searchPatient.html', title='Search For Patient', form=form)
 
 @app.route('/displayPatient', methods=['Get', 'POST'])
 def displayPatient():
     patientDictList = session.get('patientDictList', None)
-    #patientDictListString = request.args.get('patientDictList', None)
-    #print(patientDictListString)
-    #patientDictList = json.loads(patientDictListString)
-    print(type(patientDictList))
-    print(type(patientDictList[0]))
-
 
     return render_template('displayPatient.html', title='Display Patient', patientDictList=patientDictList)
 

@@ -98,9 +98,9 @@ def selectPatient(patientDict, user):
     finally:
         if conn is not None:
             conn.close()
-#
+
 # patient = {
-#     'idPatient': '11111111111',
+#     'idPatient': None,
 #     'name': None,
 #     'surname': None,
 #     'gender': 'B',
@@ -115,6 +115,7 @@ def selectPatient(patientDict, user):
 # }
 #
 # patientResultList = selectPatient(patient, 'postgres')
+# print(patientResultList)
 # for patientTuple in patientResultList:
 #     for i in patientTuple:
 #         print(i)
