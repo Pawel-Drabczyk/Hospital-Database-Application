@@ -117,8 +117,10 @@ def searchPatient():
         print(patientTupleList)
         #converting list of tuples to list of dictionaries
         patientDictList = []
+        i = 1
         for tuple in patientTupleList:
             temp = {
+                'listNumber': i,
                 'idPatient': tuple[0],
                 'name': tuple[1],
                 'surname': tuple[2],
@@ -133,7 +135,7 @@ def searchPatient():
                 'additionalDescription': tuple[11],
                 'isAlive': tuple[12]
             }
-
+            i = i+1
             patientDictList.append(temp)
 
         session['patientDictList'] = patientDictList
@@ -143,7 +145,6 @@ def searchPatient():
 @app.route('/displayPatient', methods=['Get', 'POST'])
 def displayPatient():
     patientDictList = session.get('patientDictList', None)
-
     return render_template('displayPatient.html', title='Display Patient', patientDictList=patientDictList)
 
 
