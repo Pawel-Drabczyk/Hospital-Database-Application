@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, session
-from Web.forms import RegistrationForm, LoginForm, addPatientForm, searchPatientForm
-from Web.connect import insertPatient, selectPatient
+from Web.forms import RegistrationForm, LoginForm, addPatientForm, searchPatientForm, updatePatientForm
+from Web.connect import insertPatient, selectPatient, updatePatientSQL
 import psycopg2.errors
 import json
 
@@ -147,6 +147,36 @@ def displayPatient():
     patientDictList = session.get('patientDictList', None)
     return render_template('displayPatient.html', title='Display Patient', patientDictList=patientDictList)
 
+@app.route('/updatePatient', methods=['Get', 'POST'])
+def updatePatient():
+    form = updatePatientForm()
+    if form.validate_on_submit():
+        patientDict = {
+            'idPatientOld': form.idPatientOld.data,
+            'idPatient': form.idPatient.data,
+            'name': form.name.data,
+            'surname': form.surname.data,
+            'gender': form.gender.data,
+            'postalCode': form.postalCode.data,
+            'city': form.city.data,
+            'street': form.street.data,
+            'houseNumber': form.houseNumber.data,
+            'apartmentNumber': form.apartmentNumber.data,
+            'tel': form.tel.data,
+            'email': form.email.data,
+            'additionalDescription': form.additionalDescription.data,
+            'isAlive': form.isAlive.data
+        }
+        if patientDict['idPatient'] == '':
+            patientDict['idPatient'] = patientDict['idPatientOld']
+
+        exception = updatePatientSQL(patientDict, 'postgres')
+        if exception == psycopg2.errors.IntegrityError:
+            flash('Wrong PESEL number!', 'danger')
+        else:
+            flash('Updated Patient!', 'success')
+        return redirect(url_for('updatePatient'))
+    return render_template('updatePatient.html', title='Update Patient', form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)
