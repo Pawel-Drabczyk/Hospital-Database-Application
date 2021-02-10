@@ -38,7 +38,7 @@ def getDB(user):
             conn.close()
             print('Database connection closed.')
 
-def insertPatient(patientDict, user):
+def insertPatientSQL(patientDict, user):
     sql = "INSERT INTO hdbapp.patient(idPatient, name, surname, gender, " \
           "postalCode, city, street, houseNumber, apartmentNumber, tel, email, additionalDescription, isAlive)" \
           " VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
@@ -61,7 +61,7 @@ def insertPatient(patientDict, user):
         if conn is not None:
             conn.close()
 
-def selectPatient(patientDict, user):
+def selectPatientSQL(patientDict, user):
     sql = "SELECT * FROM hdbapp.patient " \
           "     WHERE " \
           "         (idPatient=%s OR %s IS NULL) " \

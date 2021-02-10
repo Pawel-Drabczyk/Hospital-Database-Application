@@ -1,8 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, session
 from Web.forms import RegistrationForm, LoginForm, addPatientForm, searchPatientForm, updatePatientForm
-from Web.connect import insertPatient, selectPatient, updatePatientSQL
+from Web.connect import insertPatientSQL, selectPatientSQL, updatePatientSQL
 import psycopg2.errors
-import json
 
 
 app = Flask(__name__)
@@ -52,7 +51,7 @@ def login():
             flash('Login Unsuccessful. Plese check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-@app.route('/addPatient', methods=['Get', 'POST'])
+@app.route('/Patient/addPatient', methods=['Get', 'POST'])
 def addPatient():
     form = addPatientForm()
     if form.validate_on_submit():
@@ -71,7 +70,7 @@ def addPatient():
             'additionalDescription': form.additionalDescription.data,
             'isAlive': form.isAlive.data
         }
-        exception = insertPatient(patientDict, 'postgres')
+        exception = insertPatientSQL(patientDict, 'postgres')
         if exception == psycopg2.errors.IntegrityError:
             flash('Patient already exists!', 'danger')
         else:
@@ -79,7 +78,7 @@ def addPatient():
         return redirect(url_for('addPatient'))
     return render_template('addPatient.html', title='Add Patient', form=form)
 
-@app.route('/searchPatient', methods=['Get', 'POST'])
+@app.route('/Patient/searchPatient', methods=['Get', 'POST'])
 def searchPatient():
     form = searchPatientForm()
     if form.validate_on_submit():
@@ -112,9 +111,7 @@ def searchPatient():
         if patientDict['tel'] == '': patientDict['tel'] = None
         if patientDict['email'] == '': patientDict['email'] = None
 
-        print(patientDict)
-        patientTupleList = selectPatient(patientDict, 'postgres')
-        print(patientTupleList)
+        patientTupleList = selectPatientSQL(patientDict, 'postgres')
         #converting list of tuples to list of dictionaries
         patientDictList = []
         i = 1
@@ -142,12 +139,12 @@ def searchPatient():
         return redirect(url_for('displayPatient', patientDictList=patientDictList))
     return render_template('searchPatient.html', title='Search For Patient', form=form)
 
-@app.route('/displayPatient', methods=['Get', 'POST'])
+@app.route('/Patient/displayPatient', methods=['Get', 'POST'])
 def displayPatient():
     patientDictList = session.get('patientDictList', None)
     return render_template('displayPatient.html', title='Display Patient', patientDictList=patientDictList)
 
-@app.route('/updatePatient', methods=['Get', 'POST'])
+@app.route('/Patient/updatePatient', methods=['Get', 'POST'])
 def updatePatient():
     form = updatePatientForm()
     if form.validate_on_submit():
