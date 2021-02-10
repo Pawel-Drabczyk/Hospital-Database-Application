@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>List of found medical conditions:</h2>
+        {% for medicalConditionDict in medicalConditionDictList %}
+            <h3>Medical Condition {{ medicalConditionDict['listNumber'] }}</h3>
+            <p>Medical Condition number - {{ medicalConditionDict['idMedicalCondition'] }}</p>
+            <p>Name - {{ medicalConditionDict['name'] }}</p>
+            <p>Is infectious? - {{ medicalConditionDict['isInfectious'] }}</p>
+        {% endfor %}
+    </div>
+{% endblock content %}

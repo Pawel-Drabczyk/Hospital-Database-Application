@@ -14,6 +14,7 @@ CREATE TABLE possibleSymptoms
 CREATE TABLE medicalCondition
     (
     idMedicalCondition INT NOT NULL,
+    name VARCHAR NOT NULL,
     isInfectious BOOLEAN NOT NULL,
     PRIMARY KEY(idMedicalCondition)
     );

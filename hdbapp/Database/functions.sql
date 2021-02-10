@@ -74,3 +74,17 @@ BEGIN
                    AND (hdbapp.ward.idHospital=CAST(idHospitalSearched AS INTEGER) OR idHospitalSearched IS NULL);
 END;
 $$ LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION hdbapp.optionalSearchMedicalCondition (idMedicalConditionSearched VARCHAR,
+                                                                 nameSearched VARCHAR, isInfectiousSearched VARCHAR)
+    RETURNS TABLE (idMedicalCondition INTEGER, name VARCHAR, isInfectious BOOLEAN) AS
+$$
+BEGIN
+    RETURN QUERY
+        SELECT * FROM hdbapp.medicalCondition
+               WHERE
+                   (hdbapp.medicalCondition.idMedicalCondition=CAST(idMedicalConditionSearched AS INTEGER) OR idMedicalConditionSearched IS NULL)
+                   AND (hdbapp.medicalCondition.name=nameSearched OR nameSearched IS NULL)
+                   AND (hdbapp.medicalCondition.isInfectious=CAST(isInfectiousSearched AS BOOLEAN) OR isInfectiousSearched IS NULL);
+END;
+$$ LANGUAGE 'plpgsql';

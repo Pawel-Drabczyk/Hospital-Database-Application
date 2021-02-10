@@ -2,6 +2,7 @@ from flask import Flask
 import hdbapp.views.viewsPatient
 import hdbapp.views.viewsDoctor
 import hdbapp.views.viewsHospital
+import hdbapp.views.viewsMedicalCondition
 import hdbapp.views.viewsWard
 
 
@@ -32,6 +33,12 @@ app.add_url_rule('/Hospital/addHospital', view_func=hdbapp.views.viewsHospital.a
 app.add_url_rule('/Hospital/searchHospital', view_func=hdbapp.views.viewsHospital.searchHospital, methods=['Get', 'POST'])
 app.add_url_rule('/Hospital/displayHospital', view_func=hdbapp.views.viewsHospital.displayHospital, methods=['Get', 'POST'])
 app.add_url_rule('/Hospital/updateHospital', view_func=hdbapp.views.viewsHospital.updateHospital, methods=['Get', 'POST'])
+
+app.add_url_rule('/medicalCondition', view_func=hdbapp.views.viewsMedicalCondition.medicalCondition, methods=['Get', 'POST'])
+app.add_url_rule('/medicalCondition/addMedicalCondition', view_func=hdbapp.views.viewsMedicalCondition.addMedicalCondition, methods=['Get', 'POST'])
+app.add_url_rule('/medicalCondition/searchMedicalCondition', view_func=hdbapp.views.viewsMedicalCondition.searchMedicalCondition, methods=['Get', 'POST'])
+app.add_url_rule('/medicalCondition/displayMedicalCondition', view_func=hdbapp.views.viewsMedicalCondition.displayMedicalCondition, methods=['Get', 'POST'])
+app.add_url_rule('/medicalCondition/updateMedicalCondition', view_func=hdbapp.views.viewsMedicalCondition.updateMedicalCondition, methods=['Get', 'POST'])
 
 app.add_url_rule('/Ward', view_func=hdbapp.views.viewsWard.ward, methods=['Get', 'POST'])
 app.add_url_rule('/Ward/addWard', view_func=hdbapp.views.viewsWard.addWard, methods=['Get', 'POST'])
