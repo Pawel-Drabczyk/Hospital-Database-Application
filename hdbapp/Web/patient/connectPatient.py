@@ -62,33 +62,17 @@ def insertPatientSQL(patientDict, user):
             conn.close()
 
 def selectPatientSQL(patientDict, user):
-    sql = "SELECT * FROM hdbapp.patient " \
-          "     WHERE " \
-          "         (idPatient=%s OR %s IS NULL) " \
-          "         AND (name=%s OR %s IS NULL) " \
-          "         AND (surname=%s OR %s IS NULL) " \
-          "         AND (gender=%s OR %s IS NULL OR %s='B') " \
-          "         AND (postalCode=%s OR %s IS NULL) " \
-          "         AND (city=%s OR %s IS NULL) " \
-          "         AND (street=%s OR %s IS NULL) " \
-          "         AND (houseNumber=%s OR %s IS NULL) " \
-          "         AND (apartmentNumber=%s OR %s IS NULL) " \
-          "         AND (tel=%s OR %s IS NULL) " \
-          "         AND (email=%s OR %s IS NULL) " \
-          "         AND (isAlive=%s OR %s IS NULL);"
+    sql = "select * from hdbapp.optionalSearchPatient(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
 
     conn = None
     try:
         params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        cur.execute(sql, (patientDict['idPatient'], patientDict['idPatient'], patientDict['name'], patientDict['name'],
-                          patientDict['surname'], patientDict['surname'], patientDict['gender'], patientDict['gender'],
-                          patientDict['gender'], patientDict['postalCode'], patientDict['postalCode'], patientDict['city'],
-                          patientDict['city'], patientDict['street'], patientDict['street'], patientDict['houseNumber'],
-                          patientDict['houseNumber'], patientDict['apartmentNumber'], patientDict['apartmentNumber'],
-                          patientDict['tel'], patientDict['tel'], patientDict['email'], patientDict['email'],
-                          patientDict['isAlive'], patientDict['isAlive']))
+        cur.execute(sql, (patientDict['idPatient'], patientDict['name'], patientDict['surname'], patientDict['gender'],
+                          patientDict['postalCode'], patientDict['city'], patientDict['street'],
+                          patientDict['houseNumber'], patientDict['apartmentNumber'], patientDict['tel'],
+                          patientDict['email'], patientDict['isAlive']))
         results = cur.fetchall()
         cur.close()
         return results

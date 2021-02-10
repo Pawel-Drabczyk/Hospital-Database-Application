@@ -58,17 +58,14 @@ def insertHospitalSQL(hospitalDict, user):
             conn.close()
 
 def selectHospitalSQL(hospitalDict, user):
-    sql = "SELECT * FROM hdbapp.hospital " \
-          "     WHERE " \
-          "         (idHospital=%s OR %s IS NULL) " \
-          "         AND (name=%s OR %s IS NULL);" \
+    sql = "select * from hdbapp.optionalSearchHospital(%s, %s);" \
 
     conn = None
     try:
         params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        cur.execute(sql, (hospitalDict['idHospital'], hospitalDict['idHospital'], hospitalDict['name'], hospitalDict['name']))
+        cur.execute(sql, ( hospitalDict['idHospital'], hospitalDict['name']))
         results = cur.fetchall()
         cur.close()
         return results
