@@ -42,7 +42,7 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 def patient():
-    return render_template('patient.html', title='Patient')
+    return render_template('patient/patient.html', title='Patient')
 
 
 def addPatient():
@@ -69,7 +69,7 @@ def addPatient():
         else:
             flash('Added Patient!', 'success')
         return redirect(url_for('addPatient'))
-    return render_template('addPatient.html', title='Add Patient', form=form)
+    return render_template('patient/addPatient.html', title='Add Patient', form=form)
 
 def searchPatient():
     form = searchPatientForm()
@@ -129,11 +129,11 @@ def searchPatient():
 
         session['patientDictList'] = patientDictList
         return redirect(url_for('displayPatient', patientDictList=patientDictList))
-    return render_template('searchPatient.html', title='Search For Patient', form=form)
+    return render_template('patient/searchPatient.html', title='Search For Patient', form=form)
 
 def displayPatient():
     patientDictList = session.get('patientDictList', None)
-    return render_template('displayPatient.html', title='Display Patient', patientDictList=patientDictList)
+    return render_template('patient/displayPatient.html', title='Display Patient', patientDictList=patientDictList)
 
 def updatePatient():
     form = updatePatientForm()
@@ -163,7 +163,7 @@ def updatePatient():
         else:
             flash('Updated Patient!', 'success')
         return redirect(url_for('updatePatient'))
-    return render_template('updatePatient.html', title='Update Patient', form=form)
+    return render_template('patient/updatePatient.html', title='Update Patient', form=form)
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
