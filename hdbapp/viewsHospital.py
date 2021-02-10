@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect, session
-from hdbapp.Web.formsHospital import addHospitalForm#, searchPatientForm, updatePatientForm
-from hdbapp.Web.connectHospital import insertHospitalSQL#, selectHospitalSQL, updateHospitalSQL
+from hdbapp.Web.formsHospital import addHospitalForm, searchHospitalForm, updateHospitalForm
+from hdbapp.Web.connectHospital import insertHospitalSQL, selectHospitalSQL, updateHospitalSQL
 import psycopg2.errors
 
 def hospital():
@@ -21,99 +21,55 @@ def addHospital():
         return redirect(url_for('addHospital'))
     return render_template('hospital/addHospital.html', title='Add Hospital', form=form)
 
-def searchPatient():
-    form = searchPatientForm()
+def searchHospital():
+    form = searchHospitalForm()
     if form.validate_on_submit():
-        patientDict = {
-            'idPatient': form.idPatient.data,
-            'name': form.name.data,
-            'surname': form.surname.data,
-            'gender': form.gender.data,
-            'postalCode': form.postalCode.data,
-            'city': form.city.data,
-            'street': form.street.data,
-            'houseNumber': form.houseNumber.data,
-            'apartmentNumber': form.apartmentNumber.data,
-            'tel': form.tel.data,
-            'email': form.email.data,
-            'isAlive': None
+        hospitalDict = {
+            'idHospital': form.idHospital.data,
+            'name': form.name.data
         }
-        if form.isAlive.data == 'A':
-            patientDict['isAlive'] = True
-        elif form.isAlive.data == 'D':
-            patientDict['isAlive'] = False
-        if patientDict['idPatient'] == '': patientDict['idPatient'] = None
-        if patientDict['name'] == '': patientDict['name'] = None
-        if patientDict['surname'] == '': patientDict['surname'] = None
-        if patientDict['postalCode'] == '': patientDict['postalCode'] = None
-        if patientDict['city'] == '': patientDict['city'] = None
-        if patientDict['street'] == '': patientDict['street'] = None
-        if patientDict['houseNumber'] == '': patientDict['houseNumber'] = None
-        if patientDict['apartmentNumber'] == '': patientDict['apartmentNumber'] = None
-        if patientDict['tel'] == '': patientDict['tel'] = None
-        if patientDict['email'] == '': patientDict['email'] = None
+        if hospitalDict['idHospital'] == '' : hospitalDict['idHospital'] = None
+        if hospitalDict['name'] == '' : hospitalDict['name'] = None
 
-        patientTupleList = selectPatientSQL(patientDict, 'postgres')
+        hospitalTupleList = selectHospitalSQL(hospitalDict, 'postgres')
         #converting list of tuples to list of dictionaries
-        patientDictList = []
+        hospitalDictList = []
         i = 1
-        for tuple in patientTupleList:
+        for tuple in hospitalTupleList:
             temp = {
                 'listNumber': i,
-                'idPatient': tuple[0],
+                'idHospital': tuple[0],
                 'name': tuple[1],
-                'surname': tuple[2],
-                'gender': tuple[3],
-                'postalCode': tuple[4],
-                'city': tuple[5],
-                'street': tuple[6],
-                'houseNumber': tuple[7],
-                'apartmentNumber': tuple[8],
-                'tel': tuple[9],
-                'email': tuple[10],
-                'additionalDescription': tuple[11],
-                'isAlive': tuple[12]
             }
             i = i+1
-            patientDictList.append(temp)
+            hospitalDictList.append(temp)
 
-        session['patientDictList'] = patientDictList
-        return redirect(url_for('displayPatient', patientDictList=patientDictList))
-    return render_template('patient/searchPatient.html', title='Search For Patient', form=form)
+        session['hospitalDictList'] = hospitalDictList
+        return redirect(url_for('displayHospital'))
+    return render_template('hospital/searchHospital.html', title='Search For Hospital', form=form)
 
-def displayPatient():
-    patientDictList = session.get('patientDictList', None)
-    return render_template('patient/displayPatient.html', title='Display Patient', patientDictList=patientDictList)
+def displayHospital():
+    hospitalDictList = session.get('hospitalDictList', None)
+    return render_template('hospital/displayHospital.html', title='Display Hospital', hospitalDictList=hospitalDictList)
 
-def updatePatient():
-    form = updatePatientForm()
+def updateHospital():
+    form = updateHospitalForm()
     if form.validate_on_submit():
-        patientDict = {
-            'idPatientOld': form.idPatientOld.data,
-            'idPatient': form.idPatient.data,
-            'name': form.name.data,
-            'surname': form.surname.data,
-            'gender': form.gender.data,
-            'postalCode': form.postalCode.data,
-            'city': form.city.data,
-            'street': form.street.data,
-            'houseNumber': form.houseNumber.data,
-            'apartmentNumber': form.apartmentNumber.data,
-            'tel': form.tel.data,
-            'email': form.email.data,
-            'additionalDescription': form.additionalDescription.data,
-            'isAlive': form.isAlive.data
+        hospitalDict = {
+            'idHospitalOld': form.idHospitalOld.data,
+            'idHospital': form.idHospital.data,
+            'name': form.name.data
         }
-        if patientDict['idPatient'] == '':
-            patientDict['idPatient'] = patientDict['idPatientOld']
+        if hospitalDict['idHospital'] == '':
+            hospitalDict['idHospital'] = hospitalDict['idHospitalOld']
 
-        exception = updatePatientSQL(patientDict, 'postgres')
+        exception = updateHospitalSQL(hospitalDict, 'postgres')
         if exception == psycopg2.errors.IntegrityError:
-            flash('Wrong PESEL number!', 'danger')
+            flash('Wrong hospital number!', 'danger')
         else:
-            flash('Updated Patient!', 'success')
-        return redirect(url_for('updatePatient'))
-    return render_template('patient/updatePatient.html', title='Update Patient', form=form)
+            flash('Updated hospital!', 'success')
+        return redirect(url_for('updateHospital'))
+    return render_template('hospital/updateHospital.html', title='Update Hospital', form=form)
 
 # if __name__ == '__main__':
 #     app.run(debug=True)

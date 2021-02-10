@@ -11,13 +11,18 @@ app.add_url_rule('/', view_func=hdbapp.viewsPatient.home, methods=['Get', 'POST'
 app.add_url_rule('/about', view_func=hdbapp.viewsPatient.about, methods=['Get', 'POST'])
 app.add_url_rule('/register', view_func=hdbapp.viewsPatient.register, methods=['Get', 'POST'])
 app.add_url_rule('/login', view_func=hdbapp.viewsPatient.login)
+
 app.add_url_rule('/Patient', view_func=hdbapp.viewsPatient.patient, methods=['Get', 'POST'])
 app.add_url_rule('/Patient/addPatient', view_func=hdbapp.viewsPatient.addPatient, methods=['Get', 'POST'])
 app.add_url_rule('/Patient/searchPatient', view_func=hdbapp.viewsPatient.searchPatient, methods=['Get', 'POST'])
 app.add_url_rule('/Patient/displayPatient', view_func=hdbapp.viewsPatient.displayPatient, methods=['Get', 'POST'])
 app.add_url_rule('/Patient/updatePatient', view_func=hdbapp.viewsPatient.updatePatient, methods=['Get', 'POST'])
-#app.add_url_rule('/Hospital', view_func=hdbapp.viewsPatient.hospital, methods=['Get', 'POST'])
+
+app.add_url_rule('/Hospital', view_func=hdbapp.viewsHospital.hospital, methods=['Get', 'POST'])
 app.add_url_rule('/Hospital/addHospital', view_func=hdbapp.viewsHospital.addHospital, methods=['Get', 'POST'])
+app.add_url_rule('/Hospital/searchHospital', view_func=hdbapp.viewsHospital.searchHospital, methods=['Get', 'POST'])
+app.add_url_rule('/Hospital/displayHospital', view_func=hdbapp.viewsHospital.displayHospital, methods=['Get', 'POST'])
+app.add_url_rule('/Hospital/updateHospital', view_func=hdbapp.viewsHospital.updateHospital, methods=['Get', 'POST'])
 
 if __name__ == '__main__':
     app.run(debug=True)

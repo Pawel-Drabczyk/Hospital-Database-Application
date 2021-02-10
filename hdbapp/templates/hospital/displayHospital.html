@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>List of found hospitals:</h2>
+        {% for hospitalDict in hospitalDictList %}
+            <h3>Hospital {{ hospitalDict['listNumber'] }}</h3>
+            <p>Hospital number - {{ hospitalDict['idHospital'] }}</p>
+            <p>Name - {{ hospitalDict['name'] }}</p>
+        {% endfor %}
+    </div>
+{% endblock content %}
