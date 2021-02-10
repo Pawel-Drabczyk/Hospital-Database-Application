@@ -1,6 +1,6 @@
-from flask import Flask, render_template, url_for, flash, redirect, session
-from hdbapp.Web.formsHospital import addHospitalForm, searchHospitalForm, updateHospitalForm
-from hdbapp.Web.connectHospital import insertHospitalSQL, selectHospitalSQL, updateHospitalSQL
+from flask import render_template, url_for, flash, redirect, session
+from hdbapp.Web.hospital.formsHospital import addHospitalForm, searchHospitalForm, updateHospitalForm
+from hdbapp.Web.hospital.connectHospital import insertHospitalSQL, selectHospitalSQL, updateHospitalSQL
 import psycopg2.errors
 
 def hospital():

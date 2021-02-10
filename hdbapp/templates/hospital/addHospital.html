@@ -10,7 +10,7 @@
                     {% if form.idHospital.errors %}
                         {{ form.idHospital(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            {% for idHospital in form.idHospital.errors %}
+                            {% for error in form.idHospital.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>

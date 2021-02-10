@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h3> List of possible actions with wards:</h3>
+        <a class="nav-item nav-link" href="{{ url_for('addWard') }}">Add Ward</a>
+        <a class="nav-item nav-link" href="{{ url_for('searchWard') }}">Search for Ward</a>
+        <a class="nav-item nav-link" href="{{ url_for('updateWard') }}">Update Ward</a>
+    </div>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>List of found wards:</h2>
+        {% for wardDict in wardDictList %}
+            <h3>Ward {{ wardDict['listNumber'] }}</h3>
+            <p>Ward number - {{ wardDict['idWard'] }}</p>
+            <p>Name - {{ wardDict['name'] }}</p>
+            <p>Capacity - {{ wardDict['capacity'] }}</p>
+            <p>Hospital number - {{ wardDict['idHospital'] }}</p>
+        {% endfor %}
+    </div>
+{% endblock content %}

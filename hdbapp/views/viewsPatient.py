@@ -1,6 +1,6 @@
-from flask import Flask, render_template, url_for, flash, redirect, session
-from hdbapp.Web.formsPatient import RegistrationForm, LoginForm, addPatientForm, searchPatientForm, updatePatientForm
-from hdbapp.Web.connectPatient import insertPatientSQL, selectPatientSQL, updatePatientSQL
+from flask import render_template, url_for, flash, redirect, session
+from hdbapp.Web.patient.formsPatient import RegistrationForm, LoginForm, addPatientForm, searchPatientForm, updatePatientForm
+from hdbapp.Web.patient.connectPatient import insertPatientSQL, selectPatientSQL, updatePatientSQL
 import psycopg2.errors
 
 posts = [

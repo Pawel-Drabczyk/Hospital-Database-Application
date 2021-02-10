@@ -20,7 +20,7 @@ def config(filename, section='postgresql'):
 def getDB(user):
     conn = None
     try:
-        params = config(os.path.join('../..', 'Users', f'{user}.ini'), 'postgresql')
+        params = config(os.path.join('../../..', 'Users', f'{user}.ini'), 'postgresql')
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
 
