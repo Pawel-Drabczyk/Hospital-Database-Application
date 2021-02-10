@@ -3,8 +3,6 @@ from hdbapp.Web.forms import RegistrationForm, LoginForm, addPatientForm, search
 from hdbapp.Web.connect import insertPatientSQL, selectPatientSQL, updatePatientSQL
 import psycopg2.errors
 
-
-
 posts = [
     {
         'author': 'Paweł Drabczyk',
@@ -42,6 +40,10 @@ def login():
         else:
             flash('Login Unsuccessful. Plese check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
+def patient():
+    return render_template('patient.html', title='Patient')
+
 
 def addPatient():
     form = addPatientForm()

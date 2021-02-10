@@ -30,7 +30,7 @@ class searchPatientForm(FlaskForm):
     apartmentNumber = StringField('Apartment Number')
     tel = StringField('Telephone Number')
     email = StringField('Email')
-    isAlive = SelectField('Alive', choices=[('A', 'Alive'), ('D', 'Dead'), ('B', 'Both')])
+    isAlive = SelectField('Alive', choices=[('B', 'Both'), ('A', 'Alive'), ('D', 'Dead')])
     submit = SubmitField('Search for Patient')
 
 class updatePatientForm(FlaskForm):
