@@ -34,7 +34,7 @@ CREATE TABLE disease
     endDate DATE,
     additionalSymptoms VARCHAR(30),
     idMedicalCondition INT NOT NULL,
-    idDoctor INT NOT NULL,
+    idDoctor VARCHAR NOT NULL,
     PRIMARY KEY(idDisease)
     );
 
@@ -73,7 +73,7 @@ CREATE TABLE stay
     idPatient VARCHAR(30) NOT NULL,
     startDate DATE NOT NULL,
     endDate DATE,
-    idDoctor INT NOT NULL,
+    idDoctor VARCHAR NOT NULL,
     idWard INT NOT NULL,
     PRIMARY KEY(idStay)
     );
@@ -106,14 +106,14 @@ CREATE TABLE ward
 
 CREATE TABLE doctor
     (
-    idDoctor INT NOT NULL,
+    idDoctor VARCHAR NOT NULL,
     name VARCHAR(30) NOT NULL,
     surname VARCHAR(30) NOT NULL,
     gender VARCHAR(2) NOT NULL,
     tel VARCHAR(30),
+    email VARCHAR(30),
     specialisation VARCHAR(30),
     idWard INT NOT NULL,
-    isHired BOOLEAN NOT NULL,
     PRIMARY KEY(idDoctor)
     );
 

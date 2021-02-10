@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>List of found doctors:</h2>
+        {% for doctorDict in doctorDictList %}
+            <h3>Doctor {{ doctorDict['listNumber'] }}</h3>
+            <p>Pesel number - {{ doctorDict['idDoctor'] }}</p>
+            <p>Name - {{ doctorDict['name'] }}</p>
+            <p>Surname - {{ doctorDict['surname'] }}</p>
+            <p>Gender - {{ doctorDict['gender'] }}</p>
+            <p>Telephone Number - {{ doctorDict['tel'] }}</p>
+            <p>Email - {{ doctorDict['email'] }}</p>
+            <p>Specialisation - {{ doctorDict['specialisation'] }}</p>
+            <p>Hospital ward - {{ doctorDict['idWard'] }}</p>
+        {% endfor %}
+    </div>
+{% endblock content %}

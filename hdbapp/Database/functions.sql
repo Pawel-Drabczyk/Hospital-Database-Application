@@ -4,12 +4,9 @@ CREATE OR REPLACE FUNCTION hdbapp.optionalSearchPatient (idPatientSearched VARCH
                                                         streetSearched VARCHAR, houseNumberSearched VARCHAR,
                                                         apartmentNumberSearched VARCHAR, telSearched VARCHAR,
                                                         emailSearched VARCHAR, isAliveSearched BOOLEAN)
-    RETURNS TABLE (idPatient VARCHAR, name VARCHAR, surname VARCHAR,
-                                                        gender VARCHAR, postalCode VARCHAR, city VARCHAR,
-                                                        street VARCHAR, houseNumber VARCHAR, apartmentNumber VARCHAR,
-                                                        tel VARCHAR, email VARCHAR, additionalDescription VARCHAR,
-                                                        isAlive BOOLEAN)
-                                                        AS
+    RETURNS TABLE (idPatient VARCHAR, name VARCHAR, surname VARCHAR, gender VARCHAR, postalCode VARCHAR, city VARCHAR,
+                   street VARCHAR, houseNumber VARCHAR, apartmentNumber VARCHAR, tel VARCHAR, email VARCHAR,
+                   additionalDescription VARCHAR, isAlive BOOLEAN) AS
 $$
 BEGIN
     RETURN QUERY
@@ -27,6 +24,27 @@ BEGIN
                    AND (hdbapp.patient.tel=telSearched OR telSearched IS NULL)
                    AND (hdbapp.patient.email=emailSearched OR emailSearched IS NULL)
                    AND (hdbapp.patient.isAlive=isAliveSearched OR isAliveSearched IS NULL);
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION hdbapp.optionalSearchDoctor (idDoctorSearched VARCHAR, nameSearched VARCHAR,
+                                                        surnameSearched VARCHAR, genderSearched VARCHAR,
+                                                        telSearched VARCHAR, emailSearched VARCHAR, specialisationSearched VARCHAR, idWardSearched VARCHAR)
+
+    RETURNS TABLE (idDoctor VARCHAR, name VARCHAR, surname VARCHAR, gender VARCHAR, tel VARCHAR, email VARCHAR,
+                    specialisation VARCHAR, idWard INTEGER) AS
+$$
+BEGIN
+    RETURN QUERY
+        SELECT * FROM hdbapp.doctor
+               WHERE
+                   (hdbapp.doctor.idDoctor=idDoctorSearched OR idDoctorSearched IS NULL)
+                   AND (hdbapp.doctor.name=nameSearched OR nameSearched IS NULL)
+                   AND (hdbapp.doctor.surname=surnameSearched OR surnameSearched IS NULL)
+                   AND (hdbapp.doctor.gender=genderSearched OR genderSearched IS NULL OR genderSearched='B')
+                   AND (hdbapp.doctor.tel=telSearched OR telSearched IS NULL)
+                   AND (hdbapp.doctor.email=emailSearched OR emailSearched IS NULL)
+                   AND (hdbapp.doctor.idWard=CAST(idWardSearched AS INTEGER) OR idWardSearched IS NULL);
 END;
 $$ LANGUAGE 'plpgsql';
 

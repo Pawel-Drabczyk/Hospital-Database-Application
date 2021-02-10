@@ -1,5 +1,6 @@
 from flask import Flask
 import hdbapp.views.viewsPatient
+import hdbapp.views.viewsDoctor
 import hdbapp.views.viewsHospital
 import hdbapp.views.viewsWard
 
@@ -19,6 +20,12 @@ app.add_url_rule('/Patient/addPatient', view_func=hdbapp.views.viewsPatient.addP
 app.add_url_rule('/Patient/searchPatient', view_func=hdbapp.views.viewsPatient.searchPatient, methods=['Get', 'POST'])
 app.add_url_rule('/Patient/displayPatient', view_func=hdbapp.views.viewsPatient.displayPatient, methods=['Get', 'POST'])
 app.add_url_rule('/Patient/updatePatient', view_func=hdbapp.views.viewsPatient.updatePatient, methods=['Get', 'POST'])
+
+app.add_url_rule('/Doctor', view_func=hdbapp.views.viewsDoctor.doctor, methods=['Get', 'POST'])
+app.add_url_rule('/Doctor/addDoctor', view_func=hdbapp.views.viewsDoctor.addDoctor, methods=['Get', 'POST'])
+app.add_url_rule('/Doctor/searchDoctor', view_func=hdbapp.views.viewsDoctor.searchDoctor, methods=['Get', 'POST'])
+app.add_url_rule('/Doctor/displayDoctor', view_func=hdbapp.views.viewsDoctor.displayDoctor, methods=['Get', 'POST'])
+app.add_url_rule('/Doctor/updateDoctor', view_func=hdbapp.views.viewsDoctor.updateDoctor, methods=['Get', 'POST'])
 
 app.add_url_rule('/Hospital', view_func=hdbapp.views.viewsHospital.hospital, methods=['Get', 'POST'])
 app.add_url_rule('/Hospital/addHospital', view_func=hdbapp.views.viewsHospital.addHospital, methods=['Get', 'POST'])
