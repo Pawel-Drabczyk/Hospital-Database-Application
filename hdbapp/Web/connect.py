@@ -20,7 +20,7 @@ def config(filename, section='postgresql'):
 def getDB(user):
     conn = None
     try:
-        params = config(os.path.join('..', 'Users', f'{user}.ini'), 'postgresql')
+        params = config(os.path.join('../..', 'Users', f'{user}.ini'), 'postgresql')
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
 
@@ -45,7 +45,7 @@ def insertPatientSQL(patientDict, user):
 
     conn = None
     try:
-        params = config(os.path.join('..', 'Users', f'{user}.ini'), 'postgresql')
+        params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
         cur.execute(sql, (patientDict['idPatient'], patientDict['name'], patientDict['surname'], patientDict['gender'],
@@ -79,7 +79,7 @@ def selectPatientSQL(patientDict, user):
 
     conn = None
     try:
-        params = config(os.path.join('..', 'Users', f'{user}.ini'), 'postgresql')
+        params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
         cur.execute(sql, (patientDict['idPatient'], patientDict['idPatient'], patientDict['name'], patientDict['name'],
@@ -107,7 +107,7 @@ def updatePatientSQL(patientDict, user):
 
     conn = None
     try:
-        params = config(os.path.join('..', 'Users', f'{user}.ini'), 'postgresql')
+        params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
         cur.execute(sql, (patientDict['idPatient'], patientDict['name'], patientDict['surname'], patientDict['gender'],

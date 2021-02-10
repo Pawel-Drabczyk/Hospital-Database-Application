@@ -1,11 +1,9 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, session
-from Web.forms import RegistrationForm, LoginForm, addPatientForm, searchPatientForm, updatePatientForm
-from Web.connect import insertPatientSQL, selectPatientSQL, updatePatientSQL
+from flask import Flask, render_template, url_for, flash, redirect, session
+from hdbapp.Web.forms import RegistrationForm, LoginForm, addPatientForm, searchPatientForm, updatePatientForm
+from hdbapp.Web.connect import insertPatientSQL, selectPatientSQL, updatePatientSQL
 import psycopg2.errors
 
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'da73c0b0468da6b34c3ed3042c833b22a9981a2e80549059a0b2dc243ad0fc7db03d433988729d0148964816254b8823f29589f03332'
 
 posts = [
     {
@@ -22,17 +20,12 @@ posts = [
     }
 ]
 
-
-@app.route('/')
-@app.route('/home')
 def home():
     return render_template('home.html', posts=posts)
 
-@app.route('/about')
 def about():
     return render_template('about.html', title='About')
 
-@app.route('/register', methods=['Get', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -40,7 +33,6 @@ def register():
         return  redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route('/login', methods=['Get', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -51,7 +43,6 @@ def login():
             flash('Login Unsuccessful. Plese check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-@app.route('/Patient/addPatient', methods=['Get', 'POST'])
 def addPatient():
     form = addPatientForm()
     if form.validate_on_submit():
@@ -78,7 +69,6 @@ def addPatient():
         return redirect(url_for('addPatient'))
     return render_template('addPatient.html', title='Add Patient', form=form)
 
-@app.route('/Patient/searchPatient', methods=['Get', 'POST'])
 def searchPatient():
     form = searchPatientForm()
     if form.validate_on_submit():
@@ -139,12 +129,10 @@ def searchPatient():
         return redirect(url_for('displayPatient', patientDictList=patientDictList))
     return render_template('searchPatient.html', title='Search For Patient', form=form)
 
-@app.route('/Patient/displayPatient', methods=['Get', 'POST'])
 def displayPatient():
     patientDictList = session.get('patientDictList', None)
     return render_template('displayPatient.html', title='Display Patient', patientDictList=patientDictList)
 
-@app.route('/Patient/updatePatient', methods=['Get', 'POST'])
 def updatePatient():
     form = updatePatientForm()
     if form.validate_on_submit():
@@ -175,5 +163,5 @@ def updatePatient():
         return redirect(url_for('updatePatient'))
     return render_template('updatePatient.html', title='Update Patient', form=form)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
