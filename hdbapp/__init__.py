@@ -1,5 +1,7 @@
 from flask import Flask
 import hdbapp.viewsPatient
+import hdbapp.viewsHospital
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'da73c0b0468da6b34c3ed3042c833b22a9981a2e80549059a0b2dc243ad0fc7db03d433988729d0148964816254b8823f29589f03332'
@@ -14,7 +16,8 @@ app.add_url_rule('/Patient/addPatient', view_func=hdbapp.viewsPatient.addPatient
 app.add_url_rule('/Patient/searchPatient', view_func=hdbapp.viewsPatient.searchPatient, methods=['Get', 'POST'])
 app.add_url_rule('/Patient/displayPatient', view_func=hdbapp.viewsPatient.displayPatient, methods=['Get', 'POST'])
 app.add_url_rule('/Patient/updatePatient', view_func=hdbapp.viewsPatient.updatePatient, methods=['Get', 'POST'])
-
+#app.add_url_rule('/Hospital', view_func=hdbapp.viewsPatient.hospital, methods=['Get', 'POST'])
+app.add_url_rule('/Hospital/addHospital', view_func=hdbapp.viewsHospital.addHospital, methods=['Get', 'POST'])
 
 if __name__ == '__main__':
     app.run(debug=True)

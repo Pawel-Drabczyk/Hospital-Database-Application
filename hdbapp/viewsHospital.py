@@ -1,75 +1,25 @@
 from flask import Flask, render_template, url_for, flash, redirect, session
-from hdbapp.Web.formsPatient import RegistrationForm, LoginForm, addPatientForm, searchPatientForm, updatePatientForm
-from hdbapp.Web.connectPatient import insertPatientSQL, selectPatientSQL, updatePatientSQL
+from hdbapp.Web.formsHospital import addHospitalForm#, searchPatientForm, updatePatientForm
+from hdbapp.Web.connectHospital import insertHospitalSQL#, selectHospitalSQL, updateHospitalSQL
 import psycopg2.errors
 
-posts = [
-    {
-        'author': 'Paweł Drabczyk',
-        'title': 'Blog Post 1',
-        'content': 'First post',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'John Smith',
-        'title': 'Blog Post 2',
-        'content': 'Second post',
-        'date_posted': 'April 21, 2018'
-    }
-]
+def hospital():
+    return render_template('hospital/hospital.html', title='Hospital')
 
-def home():
-    return render_template('home.html', posts=posts)
-
-def about():
-    return render_template('about.html', title='About')
-
-def register():
-    form = RegistrationForm()
+def addHospital():
+    form = addHospitalForm()
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
-        return  redirect(url_for('home'))
-    return render_template('register.html', title='Register', form=form)
-
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        if form.email.data == 'admin@email.com' and form.password.data == 'password':
-            flash('You have benn logged in!', 'success')
-            return redirect(url_for('home'))
-        else:
-            flash('Login Unsuccessful. Plese check username and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
-
-def patient():
-    return render_template('patient/patient.html', title='Patient')
-
-
-def addPatient():
-    form = addPatientForm()
-    if form.validate_on_submit():
-        patientDict = {
-            'idPatient': form.idPatient.data,
-            'name': form.name.data,
-            'surname': form.surname.data,
-            'gender': form.gender.data,
-            'postalCode': form.postalCode.data,
-            'city': form.city.data,
-            'street': form.street.data,
-            'houseNumber': form.houseNumber.data,
-            'apartmentNumber': form.apartmentNumber.data,
-            'tel': form.tel.data,
-            'email': form.email.data,
-            'additionalDescription': form.additionalDescription.data,
-            'isAlive': form.isAlive.data
+        hospitalDict = {
+            'idHospital': form.idHospital.data,
+            'name': form.name.data
         }
-        exception = insertPatientSQL(patientDict, 'postgres')
+        exception = insertHospitalSQL(hospitalDict, 'postgres')
         if exception == psycopg2.errors.IntegrityError:
-            flash('Patient already exists!', 'danger')
+            flash('Hospital already exists!', 'danger')
         else:
-            flash('Added Patient!', 'success')
-        return redirect(url_for('addPatient'))
-    return render_template('patient/addPatient.html', title='Add Patient', form=form)
+            flash('Added Hospital!', 'success')
+        return redirect(url_for('addHospital'))
+    return render_template('hospital/addHospital.html', title='Add Hospital', form=form)
 
 def searchPatient():
     form = searchPatientForm()
