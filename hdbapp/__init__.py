@@ -6,6 +6,8 @@ import hdbapp.views.viewsDoctor
 import hdbapp.views.viewsHospital
 import hdbapp.views.viewsMedicalCondition
 import hdbapp.views.viewsWard
+import hdbapp.views.viewsStatistics
+
 
 
 
@@ -59,6 +61,11 @@ app.add_url_rule('/Ward/addWard', view_func=hdbapp.views.viewsWard.addWard, meth
 app.add_url_rule('/Ward/searchHospital', view_func=hdbapp.views.viewsWard.searchWard, methods=['Get', 'POST'])
 app.add_url_rule('/Ward/displayHospital', view_func=hdbapp.views.viewsWard.displayWard, methods=['Get', 'POST'])
 app.add_url_rule('/Ward/updateHospital', view_func=hdbapp.views.viewsWard.updateWard, methods=['Get', 'POST'])
+
+app.add_url_rule('/statistics', view_func=hdbapp.views.viewsStatistics.statistics, methods=['Get', 'POST'])
+app.add_url_rule('/statistics/capacity', view_func=hdbapp.views.viewsStatistics.capacity, methods=['Get', 'POST'])
+app.add_url_rule('/statistics/diseaseSum', view_func=hdbapp.views.viewsStatistics.diseaseSum, methods=['Get', 'POST'])
+app.add_url_rule('/statistics/doctorOccupance', view_func=hdbapp.views.viewsStatistics.doctorOccupance, methods=['Get', 'POST'])
 
 
 if __name__ == '__main__':

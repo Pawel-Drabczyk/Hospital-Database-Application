@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h3> List of available statistics:</h3>
+        <a class="nav-item nav-link" href="{{ url_for('capacity') }}">Capacity of the wards</a>
+        <a class="nav-item nav-link" href="{{ url_for('diseaseSum') }}">Summary diseases among patients</a>
+        <a class="nav-item nav-link" href="{{ url_for('doctorOccupance') }}">Summary of doctors' occupance</a>
+    </div>
+{% endblock content %}

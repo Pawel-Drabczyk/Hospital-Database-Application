@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>Report of doctors' occupance:</h2>
+        {% for doctorOccupance in doctorOccupanceDictList %}
+            <h3>Doctor  {{ doctorOccupance['listNumber'] }}</h3>
+            <p>Doctor PESEL - {{ doctorOccupance['idDoctor'] }}</p>
+            <p>Doctor name - {{ doctorOccupance['wardName'] }}</p>
+            <p>Doctor surname - {{ doctorOccupance['surname'] }}</p>
+            <p>Specialisation - {{ doctorOccupance['specialisation'] }}</p>
+            <p>Number of patients - {{ doctorOccupance['numberOfPatients'] }}</p>
+        {% endfor %}
+    </div>
+{% endblock content %}

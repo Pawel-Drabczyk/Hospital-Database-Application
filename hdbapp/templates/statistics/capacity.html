@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>Capacity report for all of the wards:</h2>
+        {% for capacityDict in capacityDictList %}
+            <h3>Ward  {{ capacityDict['listNumber'] }}</h3>
+            <p>Ward number - {{ capacityDict['idWard'] }}</p>
+            <p>Ward name - {{ capacityDict['wardName'] }}</p>
+            <p>Hospital name - {{ capacityDict['hospitalName'] }}</p>
+            <p>Gender - {{ capacityDict['gender'] }}</p>
+            <p>Postal Code - {{ capacityDict['postalCode'] }}</p>
+            <p>Total capacity - {{ capacityDict['capacity'] }}</p>
+            <p>Capacity taken - {{ capacityDict['capacityTaken'] }}</p>
+            <p>Ratio - {{ capacityDict['ratio'] }}</p>
+        {% endfor %}
+    </div>
+{% endblock content %}

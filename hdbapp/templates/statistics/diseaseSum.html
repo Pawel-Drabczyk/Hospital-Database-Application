@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>Report for all of the diseases:</h2>
+        {% for diseaseSumDict in diseaseSumDictList %}
+            <h3>Disease  {{ diseaseSumDict['listNumber'] }}</h3>
+            <p>Disease name - {{ diseaseSumDict['diseaseName'] }}</p>
+            <p>Number of all diseases - {{ diseaseSumDict['numberOfAllDiseases'] }}</p>
+            <p>Percent of all diseases - {{ diseaseSumDict['percentOfAllDiseases'] }}</p>
+        {% endfor %}
+    </div>
+{% endblock content %}
