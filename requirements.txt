@@ -114,10 +114,6 @@ sip==4.19.13
 six @ file:///tmp/build/80754af9/six_1605205327372/work
 smmap @ file:///tmp/build/80754af9/smmap_1597003226630/work
 swagger-spec-validator @ file:///home/conda/feedstock_root/build_artifacts/swagger-spec-validator_1593189905517/work
-tensorboard @ file:///home/builder/ktietz/conda/conda-bld/tensorboard_1604313476433/work/tmp_pip_dir
-tensorboard-plugin-wit==1.6.0
-tensorflow @ file:///home/builder/ktietz/conda/conda-bld/tensorflow-base_1597935779250/work/tensorflow_pkg/tensorflow-2.3.0-cp38-cp38-linux_x86_64.whl
-tensorflow-estimator @ file:///tmp/build/80754af9/tensorflow-estimator_1599136169057/work/whl_temp/tensorflow_estimator-2.3.0-py2.py3-none-any.whl
 termcolor==1.1.0
 terminado==0.9.1
 testpath==0.4.4
