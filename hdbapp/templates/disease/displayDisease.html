@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>List of found diseases:</h2>
+        {% for diseaseDict in diseaseDictList %}
+            <h3>Disease {{ diseaseDict['listNumber'] }}</h3>
+            <p>Disease number - {{ diseaseDict['idDisease'] }}</p>
+            <p>Patient number - {{ diseaseDict['idPatient'] }}</p>
+            <p>Start Date - {{ diseaseDict['startDate'] }}</p>
+            <p>End Date - {{ diseaseDict['endDate'] }}</p>
+            <p>Medical condition number - {{ diseaseDict['idMedicalCondition'] }}</p>
+            <p>Doctor's supervising PESEL - {{ diseaseDict['idDoctor'] }}</p>
+        {% endfor %}
+    </div>
+{% endblock content %}

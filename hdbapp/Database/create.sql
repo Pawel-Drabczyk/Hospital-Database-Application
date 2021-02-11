@@ -33,7 +33,6 @@ CREATE TABLE disease
     idPatient VARCHAR(30) NOT NULL,
     startDate DATE,
     endDate DATE,
-    additionalSymptoms VARCHAR(30),
     idMedicalCondition INT NOT NULL,
     idDoctor VARCHAR NOT NULL,
     PRIMARY KEY(idDisease)

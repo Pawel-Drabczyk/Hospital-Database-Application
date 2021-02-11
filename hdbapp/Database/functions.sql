@@ -88,3 +88,22 @@ BEGIN
                    AND (hdbapp.medicalCondition.isInfectious=CAST(isInfectiousSearched AS BOOLEAN) OR isInfectiousSearched IS NULL);
 END;
 $$ LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION hdbapp.optionalSearchDisease (idDiseaseSearched VARCHAR, idPatientSearched VARCHAR,
+                                                        startDateSearched VARCHAR, endDateSearched VARCHAR,
+                                                        idMedicalConditionSearched VARCHAR, idDoctorSearched VARCHAR)
+    RETURNS TABLE (idDisease INTEGER, idPatient VARCHAR, startDate DATE, endDate DATE, idMedicalCondition INTEGER,
+                  idDoctor VARCHAR) AS
+$$
+BEGIN
+    RETURN QUERY
+        SELECT * FROM hdbapp.disease
+               WHERE
+                   (hdbapp.disease.idDisease=CAST(idDiseaseSearched AS INTEGER) OR idDiseaseSearched IS NULL)
+                   AND (hdbapp.disease.idPatient=idPatientSearched OR idPatientSearched IS NULL)
+                   AND (hdbapp.disease.startDate=CAST(startDateSearched AS DATE) OR startDateSearched IS NULL)
+                   AND (hdbapp.disease.endDate=CAST(endDateSearched AS DATE) OR endDateSearched IS NULL)
+                   AND (hdbapp.disease.idMedicalCondition=CAST(idMedicalConditionSearched AS INTEGER) OR idMedicalConditionSearched IS NULL)
+                   AND (hdbapp.disease.idDoctor=idDoctorSearched OR idDoctorSearched IS NULL);
+END;
+$$ LANGUAGE 'plpgsql';
