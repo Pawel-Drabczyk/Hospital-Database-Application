@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>List of found stays:</h2>
+        {% for stayDict in stayDictList %}
+            <h3>Stay {{ stayDict['listNumber'] }}</h3>
+            <p>Stay number - {{ stayDict['idStay'] }}</p>
+            <p>Patient number - {{ stayDict['idPatient'] }}</p>
+            <p>Start Date - {{ stayDict['startDate'] }}</p>
+            <p>End Date - {{ stayDict['endDate'] }}</p>
+            <p>Doctor's supervising PESEL - {{ stayDict['idDoctor'] }}</p>
+            <p>Ward number - {{ stayDict['idWard'] }}</p>
+
+        {% endfor %}
+    </div>
+{% endblock content %}

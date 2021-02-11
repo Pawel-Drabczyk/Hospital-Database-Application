@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h3> List of possible actions with stays:</h3>
+        <a class="nav-item nav-link" href="{{ url_for('addStay') }}">Add stay</a>
+        <a class="nav-item nav-link" href="{{ url_for('searchStay') }}">Search for stay</a>
+        <a class="nav-item nav-link" href="{{ url_for('updateStay') }}">Update stay</a>
+    </div>
+{% endblock content %}

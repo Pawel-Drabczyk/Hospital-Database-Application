@@ -80,10 +80,9 @@ CREATE TABLE stay
 
 CREATE TABLE diseaseStay
     (
-    idDiseaseStay INT NOT NULL,
     idDisease INT NOT NULL,
     idStay INT NOT NULL,
-    PRIMARY KEY(idDiseaseStay)
+    PRIMARY KEY(idDisease, idStay)
     );
 
 CREATE TABLE surgicalOperation
@@ -91,7 +90,6 @@ CREATE TABLE surgicalOperation
     idSurgicalOperation VARCHAR(30) NOT NULL,
     name VARCHAR(30),
     description VARCHAR(100),
-    idDiseaseStay INT NOT NULL,
     PRIMARY KEY(idSurgicalOperation)
     );
 
@@ -171,10 +169,6 @@ ALTER TABLE diseaseStay
 ALTER TABLE diseaseStay
     ADD FOREIGN KEY (idStay)
         REFERENCES stay (idStay);
-
-ALTER TABLE surgicalOperation
-    ADD FOREIGN KEY (idDiseaseStay)
-        REFERENCES diseaseStay (idDiseaseStay);
 
 ALTER TABLE doctor
     ADD FOREIGN KEY (idWard)
