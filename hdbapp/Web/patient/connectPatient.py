@@ -46,8 +46,9 @@ def selectPatientSQL(patientDict, user):
     sql = "select * from hdbapp.optionalSearchPatient(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
     conn = None
     try:
-        params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
-        conn = psycopg2.connect(**params)
+        #params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
+        #conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(os.getenv(['DATABASE_URL']))
         cur = conn.cursor()
         cur.execute(sql, (patientDict['idPatient'], patientDict['name'], patientDict['surname'], patientDict['gender'],
                           patientDict['postalCode'], patientDict['city'], patientDict['street'],
