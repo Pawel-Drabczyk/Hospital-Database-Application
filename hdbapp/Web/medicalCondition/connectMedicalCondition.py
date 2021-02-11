@@ -5,7 +5,6 @@ import os
 def config(filename, section='postgresql'):
     parser = ConfigParser()
     parser.read(filename)
-
     db = {}
     if parser.has_section(section):
         params = parser.items(section)
@@ -13,13 +12,11 @@ def config(filename, section='postgresql'):
             db[param[0]] = param[1]
     else:
         raise Exception('Section {0} not found in the {1} file'.format(section, filename))
-
     return db
 
 def insertMedicalConditionSQL(medicalConditionDict, user):
     sql = "INSERT INTO hdbapp.medicalCondition(idMedicalCondition, name, isInfectious)" \
           " VALUES(%s, %s, %s);"
-
     conn = None
     try:
         params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
@@ -37,8 +34,7 @@ def insertMedicalConditionSQL(medicalConditionDict, user):
             conn.close()
 
 def selectMedicalConditionSQL(medicalConditionDict, user):
-    sql = "select * from hdbapp.optionalSearchMedicalCondition(%s, %s, %s);" \
-
+    sql = "select * from hdbapp.optionalSearchMedicalCondition(%s, %s, %s);"
     conn = None
     try:
         params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
@@ -49,7 +45,6 @@ def selectMedicalConditionSQL(medicalConditionDict, user):
         results = cur.fetchall()
         cur.close()
         return results
-
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -61,7 +56,6 @@ def updateMedicalConditionSQL(medicalConditionDict, user):
           "(idMedicalCondition, name, isInfectious) " \
           "= (%s, %s, %s) " \
           "WHERE idMedicalCondition=%s;"
-
     conn = None
     try:
         params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')

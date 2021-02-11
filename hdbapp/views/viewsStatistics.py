@@ -1,7 +1,6 @@
 from flask import render_template, url_for, flash, redirect, session
-#from hdbapp.Web.disease.formsDisease import addDiseaseForm, searchDiseaseForm, updateDiseaseForm
 from hdbapp.Web.statistics.connectStatistics import capacitySQL, diseaseSumSQL, doctorOccupanceSQL
-import psycopg2.errors
+
 
 def statistics():
     return render_template('statistics/statistics.html', title='Statistics')
@@ -22,8 +21,8 @@ def capacity():
         }
         i = i+1
         capacityDictList.append(temp)
-
     return render_template('statistics/capacity.html', title='Capacity of the wards', capacityDictList=capacityDictList)
+
 
 def diseaseSum():
     diseaseSumTupleList = diseaseSumSQL('postgres')
@@ -38,8 +37,8 @@ def diseaseSum():
         }
         i = i+1
         diseaseSumDictList.append(temp)
-
     return render_template('statistics/diseaseSum.html', title='Capacity of the wards', diseaseSumDictList=diseaseSumDictList)
+
 
 def doctorOccupance():
     doctorOccupanceTupleList = doctorOccupanceSQL('postgres')
@@ -56,31 +55,4 @@ def doctorOccupance():
         }
         i = i+1
         doctorOccupanceDictList.append(temp)
-
     return render_template('statistics/doctorOccupance.html', title='Doctor occupance', doctorOccupanceDictList=doctorOccupanceDictList)
-
-
-#
-# def updateDisease():
-#     form = updateDiseaseForm()
-#     if form.validate_on_submit():
-#         diseaseDict = {
-#             'idDiseaseOld': form.idDiseaseOld.data,
-#             'idDisease': form.idDisease.data,
-#             'idPatient': form.idPatient.data,
-#             'startDate': form.startDate.data,
-#             'endDate': form.endDate.data,
-#             'idMedicalCondition': form.idMedicalCondition.data,
-#             'idDoctor': form.idDoctor.data,
-#         }
-#         if diseaseDict['idDisease'] == '':
-#             diseaseDict['idDisease'] = diseaseDict['idDiseaseOld']
-#
-#         exception = updateDiseaseSQL(diseaseDict, 'postgres')
-#         if exception == psycopg2.errors.IntegrityError:
-#             flash('Wrong disease number!', 'danger')
-#         else:
-#             flash('Updated disease!', 'success')
-#         return redirect(url_for('updateDisease'))
-#     return render_template('disease/updateDisease.html', title='Update disease', form=form)
-

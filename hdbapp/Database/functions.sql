@@ -109,30 +109,6 @@ END;
 $$ LANGUAGE 'plpgsql';
 
 
---CREATE OR REPLACE FUNCTION hdbapp.optionalSearchStay (idStaySearched VARCHAR, idPatientSearched VARCHAR,
---                                                        startDateSearched VARCHAR, endDateSearched VARCHAR,
---                                                        idDoctorSearched VARCHAR, idWardSearched VARCHAR,
---                                                        idDiseaseSearched VARCHAR)
---    RETURNS TABLE (idStay INTEGER, idPatient VARCHAR, startDate DATE,
---                  endDate DATE, idDoctor VARCHAR, idWard INTEGER,
---                  idDiseaseSearched INTEGER) AS
---$$
---BEGIN
---    RETURN QUERY
---        SELECT (hdbapp.stay.idStay, hdbapp.stay.idPatient, hdbapp.stay.startDate, hdbapp.stay.endDate,
---                hdbapp.stay.idDoctor, hdbapp.stay.idWard)
---                FROM hdbapp.stay
---                    WHERE
---                       (hdbapp.stay.idStay=CAST(idStaySearched AS INTEGER) OR idStaySearched IS NULL)
---                       AND (hdbapp.stay.idPatient=idPatientSearched OR idPatientSearched IS NULL)
---                       AND (hdbapp.stay.startDate=CAST(startDateSearched AS DATE) OR startDateSearched IS NULL)
---                       AND (hdbapp.stay.endDate=CAST(endDateSearched AS DATE) OR endDateSearched IS NULL)
---                       AND (hdbapp.stay.idDoctor=idDoctorSearched OR idDoctorSearched IS NULL)
---                       AND (hdbapp.stay.idWard=CAST(idWardSearched AS INTEGER) OR idWardSearched IS NULL);
---END;
---$$ LANGUAGE 'plpgsql';
-
-
 CREATE OR REPLACE FUNCTION hdbapp.optionalSearchStay (idStaySearched VARCHAR, idPatientSearched VARCHAR,
                                                         startDateSearched VARCHAR, endDateSearched VARCHAR,
                                                         idDoctorSearched VARCHAR, idWardSearched VARCHAR)

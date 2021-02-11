@@ -3,26 +3,9 @@ from hdbapp.Web.patient.formsPatient import RegistrationForm, LoginForm, addPati
 from hdbapp.Web.patient.connectPatient import insertPatientSQL, selectPatientSQL, updatePatientSQL
 import psycopg2.errors
 
-posts = [
-    {
-        'author': 'Paweł Drabczyk',
-        'title': 'Blog Post 1',
-        'content': 'First post',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'John Smith',
-        'title': 'Blog Post 2',
-        'content': 'Second post',
-        'date_posted': 'April 21, 2018'
-    }
-]
 
 def home():
-    return render_template('home.html', posts=posts)
-
-def about():
-    return render_template('about.html', title='About')
+    return render_template('home.html')
 
 def register():
     form = RegistrationForm()
@@ -104,7 +87,6 @@ def searchPatient():
         if patientDict['email'] == '': patientDict['email'] = None
 
         patientTupleList = selectPatientSQL(patientDict, 'postgres')
-        #converting list of tuples to list of dictionaries
         patientDictList = []
         i = 1
         for tuple in patientTupleList:
@@ -131,9 +113,11 @@ def searchPatient():
         return redirect(url_for('displayPatient', patientDictList=patientDictList))
     return render_template('patient/searchPatient.html', title='Search For Patient', form=form)
 
+
 def displayPatient():
     patientDictList = session.get('patientDictList', None)
     return render_template('patient/displayPatient.html', title='Display Patient', patientDictList=patientDictList)
+
 
 def updatePatient():
     form = updatePatientForm()

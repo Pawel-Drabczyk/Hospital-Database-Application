@@ -3,8 +3,10 @@ from hdbapp.Web.disease.formsDisease import addDiseaseForm, searchDiseaseForm, u
 from hdbapp.Web.disease.connectDisease import insertDiseaseSQL, selectDiseaseSQL, updateDiseaseSQL
 import psycopg2.errors
 
+
 def disease():
     return render_template('disease/disease.html', title='Disease')
+
 
 def addDisease():
     form = addDiseaseForm()
@@ -25,6 +27,7 @@ def addDisease():
         return redirect(url_for('addDisease'))
     return render_template('disease/addDisease.html', title='Add Disease', form=form)
 
+
 def searchDisease():
     form = searchDiseaseForm()
     if form.validate_on_submit():
@@ -42,9 +45,7 @@ def searchDisease():
         if diseaseDict['endDate'] == '': diseaseDict['endDate'] = None
         if diseaseDict['idMedicalCondition'] == '': diseaseDict['idMedicalCondition'] = None
         if diseaseDict['idDoctor'] == '': diseaseDict['idDoctor'] = None
-
         diseaseTupleList = selectDiseaseSQL(diseaseDict, 'postgres')
-        #converting list of tuples to list of dictionaries
         diseaseDictList = []
         i = 1
         for tuple in diseaseTupleList:
@@ -59,14 +60,15 @@ def searchDisease():
             }
             i = i+1
             diseaseDictList.append(temp)
-
         session['diseaseDictList'] = diseaseDictList
         return redirect(url_for('displayDisease'))
     return render_template('disease/searchDisease.html', title='Search For Disease', form=form)
 
+
 def displayDisease():
     diseaseDictList = session.get('diseaseDictList', None)
     return render_template('disease/displayDisease.html', title='Display Disease', diseaseDictList=diseaseDictList)
+
 
 def updateDisease():
     form = updateDiseaseForm()
@@ -82,7 +84,6 @@ def updateDisease():
         }
         if diseaseDict['idDisease'] == '':
             diseaseDict['idDisease'] = diseaseDict['idDiseaseOld']
-
         exception = updateDiseaseSQL(diseaseDict, 'postgres')
         if exception == psycopg2.errors.IntegrityError:
             flash('Wrong disease number!', 'danger')
@@ -90,4 +91,3 @@ def updateDisease():
             flash('Updated disease!', 'success')
         return redirect(url_for('updateDisease'))
     return render_template('disease/updateDisease.html', title='Update disease', form=form)
-

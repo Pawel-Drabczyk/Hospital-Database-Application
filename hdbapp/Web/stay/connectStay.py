@@ -2,6 +2,7 @@ import psycopg2
 from configparser import ConfigParser
 import os
 
+
 def config(filename, section='postgresql'):
     parser = ConfigParser()
     parser.read(filename)

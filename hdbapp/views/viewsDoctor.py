@@ -3,6 +3,7 @@ from hdbapp.Web.doctor.formsDoctor import addDoctorForm, searchDoctorForm, updat
 from hdbapp.Web.doctor.connectDoctor import insertDoctorSQL, selectDoctorSQL, updateDoctorSQL
 import psycopg2.errors
 
+
 def doctor():
     return render_template('doctor/doctor.html', title='Doctor')
 
@@ -28,6 +29,7 @@ def addDoctor():
         return redirect(url_for('addDoctor'))
     return render_template('doctor/addDoctor.html', title='Add Doctor', form=form)
 
+
 def searchDoctor():
     form = searchDoctorForm()
     if form.validate_on_submit():
@@ -41,7 +43,6 @@ def searchDoctor():
             'specialisation': form.specialisation.data,
             'idWard': form.idWard.data
         }
-
         if doctorDict['idDoctor'] == '': doctorDict['idDoctor'] = None
         if doctorDict['name'] == '': doctorDict['name'] = None
         if doctorDict['surname'] == '': doctorDict['surname'] = None
@@ -51,9 +52,7 @@ def searchDoctor():
         if doctorDict['idWard'] == '': doctorDict['idWard'] = None
 
 
-
         doctorTupleList = selectDoctorSQL(doctorDict, 'postgres')
-        #converting list of tuples to list of dictionaries
         doctorDictList = []
         i = 1
         for tuple in doctorTupleList:
@@ -70,14 +69,15 @@ def searchDoctor():
             }
             i = i+1
             doctorDictList.append(temp)
-
         session['doctorDictList'] = doctorDictList
         return redirect(url_for('displayDoctor', doctorDictList=doctorDictList))
     return render_template('doctor/searchDoctor.html', title='Search For Doctor', form=form)
 
+
 def displayDoctor():
     doctorDictList = session.get('doctorDictList', None)
     return render_template('doctor/displayDoctor.html', title='Display Doctor', doctorDictList=doctorDictList)
+
 
 def updateDoctor():
     form = updateDoctorForm()
@@ -95,7 +95,6 @@ def updateDoctor():
         }
         if doctorDict['idDoctor'] == '':
             doctorDict['idDoctor'] = doctorDict['idDoctorOld']
-
         exception = updateDoctorSQL(doctorDict, 'postgres')
         if exception == psycopg2.errors.IntegrityError:
             flash("Wrong doctors' data!", 'danger')
@@ -103,6 +102,3 @@ def updateDoctor():
             flash('Updated Doctor!', 'success')
         return redirect(url_for('updateDoctor'))
     return render_template('doctor/updateDoctor.html', title='Update Doctor', form=form)
-
-# if __name__ == '__main__':
-#     app.run(debug=True)

@@ -5,7 +5,6 @@ import os
 def config(filename, section='postgresql'):
     parser = ConfigParser()
     parser.read(filename)
-
     db = {}
     if parser.has_section(section):
         params = parser.items(section)
@@ -13,13 +12,11 @@ def config(filename, section='postgresql'):
             db[param[0]] = param[1]
     else:
         raise Exception('Section {0} not found in the {1} file'.format(section, filename))
-
     return db
 
 def insertDiseaseSQL(diseaseDict, user):
     sql = "INSERT INTO hdbapp.disease(idDisease, idPatient, startDate, endDate, idMedicalCondition, idDoctor)" \
           " VALUES (%s, %s, %s, %s, %s, %s);"
-
     conn = None
     try:
         params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
@@ -36,9 +33,9 @@ def insertDiseaseSQL(diseaseDict, user):
         if conn is not None:
             conn.close()
 
-def selectDiseaseSQL(diseaseDict, user):
-    sql = "select * from hdbapp.optionalSearchDisease(%s, %s, %s, %s, %s, %s);" \
 
+def selectDiseaseSQL(diseaseDict, user):
+    sql = "select * from hdbapp.optionalSearchDisease(%s, %s, %s, %s, %s, %s);"
     conn = None
     try:
         params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')
@@ -49,19 +46,18 @@ def selectDiseaseSQL(diseaseDict, user):
         results = cur.fetchall()
         cur.close()
         return results
-
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
         if conn is not None:
             conn.close()
 
+
 def updateDiseaseSQL(diseaseDict, user):
     sql = "update hdbapp.disease SET " \
           "(idDisease, idPatient, startDate, endDate, idMedicalCondition, idDoctor) " \
           "= (%s, %s, %s, %s, %s, %s) " \
           "WHERE idDisease=%s;"
-
     conn = None
     try:
         params = config(os.path.join('Users', f'{user}.ini'), 'postgresql')

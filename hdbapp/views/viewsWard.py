@@ -38,7 +38,6 @@ def searchWard():
         if wardDict['idHospital'] == '' : wardDict['idHospital'] = None
 
         wardTupleList = selectWardSQL(wardDict, 'postgres')
-        #converting list of tuples to list of dictionaries
         wardDictList = []
         i = 1
         for tuple in wardTupleList:

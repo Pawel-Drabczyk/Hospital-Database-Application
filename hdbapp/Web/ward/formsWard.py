@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 class addWardForm(FlaskForm):
     idWard = StringField('Ward number', validators=[DataRequired()])

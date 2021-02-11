@@ -3,8 +3,10 @@ from hdbapp.Web.medicalCondition.formsMedicalCondition import addMedicalConditio
 from hdbapp.Web.medicalCondition.connectMedicalCondition import insertMedicalConditionSQL, selectMedicalConditionSQL, updateMedicalConditionSQL
 import psycopg2.errors
 
+
 def medicalCondition():
     return render_template('medicalCondition/medicalCondition.html', title='Medical Condition')
+
 
 def addMedicalCondition():
     form = addMedicalConditionForm()
@@ -22,6 +24,7 @@ def addMedicalCondition():
         return redirect(url_for('medicalCondition'))
     return render_template('medicalCondition/addMedicalCondition.html', title='Add Medical Condition', form=form)
 
+
 def searchMedicalCondition():
     form = searchMedicalConditionForm()
     if form.validate_on_submit():
@@ -38,7 +41,6 @@ def searchMedicalCondition():
             medicalConditionDict['isInfectious'] = False
 
         medicalConditionTupleList = selectMedicalConditionSQL(medicalConditionDict, 'postgres')
-        #converting list of tuples to list of dictionaries
         medicalConditionDictList = []
         i = 1
         for tuple in medicalConditionTupleList:
@@ -50,14 +52,15 @@ def searchMedicalCondition():
             }
             i = i+1
             medicalConditionDictList.append(temp)
-
         session['medicalConditionDictList'] = medicalConditionDictList
         return redirect(url_for('displayMedicalCondition'))
     return render_template('medicalCondition/searchMedicalCondition.html', title='Search For Medical Condition', form=form)
 
+
 def displayMedicalCondition():
     medicalConditionDictList = session.get('medicalConditionDictList', None)
     return render_template('medicalCondition/displayMedicalCondition.html', title='Display Medical Condition', medicalConditionDictList=medicalConditionDictList)
+
 
 def updateMedicalCondition():
     form = updateMedicalConditionForm()
@@ -70,7 +73,6 @@ def updateMedicalCondition():
         }
         if medicalConditionDict['idMedicalCondition'] == '':
             medicalConditionDict['idMedicalCondition'] = medicalConditionDict['idMedicalConditionOld']
-
         exception = updateMedicalConditionSQL(medicalConditionDict, 'postgres')
         if exception == psycopg2.errors.IntegrityError:
             flash('Wrong medical condition data!', 'danger')
