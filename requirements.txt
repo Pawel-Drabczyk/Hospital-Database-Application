@@ -1,4 +1,3 @@
-absl-py @ file:///tmp/build/80754af9/absl-py_1603893106258/work
 aiohttp @ file:///tmp/build/80754af9/aiohttp_1602530294624/work
 argon2-cffi @ file:///tmp/build/80754af9/argon2-cffi_1596828493937/work
 astunparse==1.6.3
