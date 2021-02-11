@@ -1,4 +1,5 @@
 import psycopg2
+import os
 
 sql = "\i create.sql; \i functions.sql; \i views.sql; \i insert.sql;"
 
