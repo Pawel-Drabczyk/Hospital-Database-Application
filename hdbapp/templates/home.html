@@ -19,7 +19,8 @@
                         <li>Forms to fill the tables. Fields for the variables with 'NOT NULL' flag send a notification when they are leaved empty.
                             Used solutions: flask's data validator.</li>
                         <li>Search forms are kind of user friendly. If you leave the field empty, the variable doesn't take part in the selection.
-                            Otherwise the conjunction of all conditions is returned. Used solutions: plpgsql functions.</li>
+                            Otherwise the conjunction of all conditions is returned. Heroku disallows too long output so don't search for too much objects at once.
+                            Used solutions: plpgsql functions.</li>
                         <li>Update forms raise the exception and shows the flash communicate if the integrity of the database is in danger.
                             The text of communicate is not always in tune with reality, but it shows that input data are wrong. If you don't specify
                             new primary key the old one is kept. Used solutions exceptions. </li>
@@ -29,7 +30,7 @@
                 </li>
                 <li>It's my first web application, forgive me the look of it.</li>
                 <li> <a class="nav-item nav-link" href="https://github.com/Pawel-Drabczyk/Hospital-Database-Application.git">The link to the github repository</a></li>
-                <li>The documentation can be found under this link (to be implemented). </li>
+                <li>The documentation can be found in github repository. </li>
             </ul>
     </div>
 {% endblock content %}
